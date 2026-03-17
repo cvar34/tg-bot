@@ -1,4 +1,5 @@
 import telebot
+from bot_logic import pass_gen
 bot = telebot.TeleBot("")
 
 @bot.message_handler(commands=['start'])
@@ -17,5 +18,9 @@ def send_bye(message):
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
     bot.reply_to(message, message.text)
+
+@bot.message_handler(commands=['genpass'])
+def send_welcome(message):
+    bot.reply_to(message, pass_gen(5))
 
 bot.polling()

@@ -22,6 +22,21 @@ def send_pass(message):
 def send_coin(message):
     bot.reply_to(message, flip_coin())
 
+@bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
+def on_user_joins(message):
+
+    user = message.new_chat_members[0]
+
+    name = user.first_name
+    if hasattr(user, 'last_name') and user.last_name is not None:
+        name += u" {}".format(user.last_name)
+
+    if hasattr(user, 'username') and user.username is not None:
+        name += u" (@{})".format(user.username)
+
+    bot.reply_to(message, "Привет, {name}".format(name=name))
+
+
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
     bot.reply_to(message, message.text)

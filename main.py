@@ -1,4 +1,4 @@
-import telebot
+import telebot, os, random
 from bot_logic import pass_gen, flip_coin
 bot = telebot.TeleBot("")
 
@@ -24,7 +24,9 @@ def send_coin(message):
 
 @bot.message_handler(commands=['mem'])
 def send_mem(message):
-    with open('images/mem1.jpg', 'rb') as f:  
+    
+    file = random.choice(os.listdir('images'))
+    with open('images/'+file, 'rb') as f:  
         bot.send_photo(message.chat.id, f)
 
 @bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])

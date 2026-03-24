@@ -22,6 +22,11 @@ def send_pass(message):
 def send_coin(message):
     bot.reply_to(message, flip_coin())
 
+@bot.message_handler(commands=['mem'])
+def send_mem(message):
+    with open('images/mem1.jpg', 'rb') as f:  
+        bot.send_photo(message.chat.id, f)
+
 @bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
 def on_user_joins(message):
 

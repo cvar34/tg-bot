@@ -1,5 +1,5 @@
 import telebot, os, random
-from bot_logic import pass_gen, flip_coin
+from bot_logic import pass_gen, flip_coin, get_duck_image_url
 bot = telebot.TeleBot("")
 
 @bot.message_handler(commands=['start'])
@@ -28,6 +28,11 @@ def send_mem(message):
     file = random.choice(os.listdir('images'))
     with open('images/'+file, 'rb') as f:  
         bot.send_photo(message.chat.id, f)
+
+@bot.message_handler(commands=['duck'])
+def duck(message):
+    image_url = get_duck_image_url()
+    bot.reply_to(message, image_url)
 
 @bot.message_handler(func=lambda m: True, content_types=['new_chat_members'])
 def on_user_joins(message):
